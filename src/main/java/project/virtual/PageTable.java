@@ -34,7 +34,7 @@ public class PageTable {
     }
 
     public int getWorkingRange() {
-        return Math.min(DataUtil.workingSetSize, entries.length);
+        return Math.min(DataUtil.WORKING_SET_SIZE, entries.length);
     }
 
     private boolean isValidVirtualPageNumber(int virtualPageNumber) {

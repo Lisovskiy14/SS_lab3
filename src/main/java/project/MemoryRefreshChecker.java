@@ -11,7 +11,7 @@ public class MemoryRefreshChecker {
     private final PhysicalMemory physicalMemory;
 
     public MemoryRefreshChecker(PhysicalMemory physicalMemory) {
-        this.maxCount = DataUtil.maxCountForRefresh;
+        this.maxCount = DataUtil.MAX_COUNT_FOR_REFRESH;
         this.physicalMemory = physicalMemory;
     }
 

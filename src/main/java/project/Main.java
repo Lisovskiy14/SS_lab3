@@ -8,8 +8,9 @@ import project.util.DataUtil;
 import project.virtual.PageTable;
 import project.virtual.PageTableEntry;
 
+import javax.xml.crypto.Data;
+
 public class Main {
-    private static final int ALL_REF_NUMBER = 1000;
 
     public static void main(String[] args) {
         testRandomAlgorithm();
@@ -20,7 +21,7 @@ public class Main {
     private static void testRandomAlgorithm() {
         Logger.filePath = "logRandom.txt";
 
-        PhysicalMemory physicalMemory = new PhysicalMemory(new PhysicalPage[10]);
+        PhysicalMemory physicalMemory = new PhysicalMemory(new PhysicalPage[DataUtil.RAM_SIZE]);
         Kernel kernel = new Kernel(physicalMemory, new RandomAlgorithm());
         MemoryRefreshChecker memoryRefreshChecker = new MemoryRefreshChecker(physicalMemory);
 
@@ -31,18 +32,18 @@ public class Main {
 
         Process process = new Process(0, pageTable, kernel);
 
-        for (int i = 0; i < ALL_REF_NUMBER; i++) {
+        for (int i = 0; i < DataUtil.ALL_REF_NUMBER; i++) {
             process.generateAccess();
             memoryRefreshChecker.checkForRefresh();
         }
 
-        Logger.writeToFile(DataUtil.workingSetSize);
+        Logger.writeToFile(DataUtil.WORKING_SET_SIZE);
     }
 
     private static void testNRUAlgorithm() {
         Logger.filePath = "logNRU.txt";
 
-        PhysicalMemory physicalMemory = new PhysicalMemory(new PhysicalPage[10]);
+        PhysicalMemory physicalMemory = new PhysicalMemory(new PhysicalPage[DataUtil.RAM_SIZE]);
         Kernel kernel = new Kernel(physicalMemory, new NRUAlgorithm());
         MemoryRefreshChecker memoryRefreshChecker = new MemoryRefreshChecker(physicalMemory);
 
@@ -53,11 +54,11 @@ public class Main {
 
         Process process = new Process(0, pageTable, kernel);
 
-        for (int i = 0; i < ALL_REF_NUMBER; i++) {
+        for (int i = 0; i < DataUtil.ALL_REF_NUMBER; i++) {
             process.generateAccess();
             memoryRefreshChecker.checkForRefresh();
         }
 
-        Logger.writeToFile(DataUtil.workingSetSize);
+        Logger.writeToFile(DataUtil.WORKING_SET_SIZE);
     }
 }

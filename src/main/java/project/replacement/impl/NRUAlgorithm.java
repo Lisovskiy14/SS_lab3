@@ -5,13 +5,16 @@ import project.physical.PhysicalPage;
 import project.replacement.ReplacementAlgorithm;
 import project.virtual.PageTableEntry;
 
+import java.util.*;
+
 public class NRUAlgorithm implements ReplacementAlgorithm {
+    private final Random random = new Random();
 
     @Override
     public void replace(PhysicalMemory physicalMemory, PageTableEntry entry) {
         PhysicalPage[] pages = physicalMemory.getArray();
 
-        PhysicalPage targetPage = null;
+        List<PhysicalPage> targetPages = new ArrayList<>();
         int bestClassFound = 4;
 
         for (PhysicalPage page : pages) {
@@ -21,27 +24,31 @@ public class NRUAlgorithm implements ReplacementAlgorithm {
 
             if (pageClass < bestClassFound) {
                 bestClassFound = pageClass;
-                targetPage = page;
-
-                if (bestClassFound == 0) break;
+                targetPages.clear();
+                targetPages.add(page);
+            } else if (pageClass == bestClassFound) {
+                targetPages.add(page);
             }
         }
 
-        if (targetPage != null) {
-            PageTableEntry prevEntry = targetPage.getEntry();
+        int targetPageNumber = random.nextInt(targetPages.size());
+        PhysicalPage targetPage = targetPages.get(targetPageNumber);
 
-            prevEntry.setPresence(false);
-            prevEntry.setReferenced(false);
-            prevEntry.setModified(false);
 
-            entry.setPhysicalPageNumber(prevEntry.getPhysicalPageNumber());
-            prevEntry.setPhysicalPageNumber(-1);
+        PageTableEntry prevEntry = targetPage.getEntry();
 
-            targetPage.setEntry(entry);
-        }
+        prevEntry.setPresence(false);
+        prevEntry.setReferenced(false);
+        prevEntry.setModified(false);
+
+        entry.setPhysicalPageNumber(prevEntry.getPhysicalPageNumber());
+        prevEntry.setPhysicalPageNumber(-1);
+
+        targetPage.setEntry(entry);
     }
 
     private int calculateNRUClass(PageTableEntry entry) {
+        System.out.println("R: " + entry.isReferenced() + "; M: " + entry.isModified());
         if (!entry.isReferenced() && !entry.isModified()) return 0;
         if (!entry.isReferenced() && entry.isModified()) return 1;
         if (entry.isReferenced() && !entry.isModified()) return 2;
