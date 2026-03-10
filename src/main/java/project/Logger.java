@@ -1,6 +1,8 @@
 package project;
 
 
+import project.util.DataUtil;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -24,9 +26,10 @@ public class Logger {
         pageFaultCount = 0;
     }
 
-    public static void writeToFile(int workingSetSize) {
+    public static void writeToFile() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            writer.write("Розмір робочого набору: " + workingSetSize + "\n");
+            writer.write("Розмір RAM: " + DataUtil.RAM_SIZE + "\n");
+            writer.write("Розмір робочого набору: " + DataUtil.WORKING_SET_SIZE + "\n");
             writer.write("Всього звернень до пам'яті: " + accessCount + "\n");
             writer.write("Всього сторінкових промахів: " + pageFaultCount + "\n");
             writer.write("Відсоток промахів: " + (pageFaultCount * 100 / accessCount) + "%");

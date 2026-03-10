@@ -50,7 +50,7 @@ public class Process {
     }
 
     private void checkForRefreshWorkingSet() {
-        if (counter >= DataUtil.WORKING_SET_SIZE) {
+        if (counter >= DataUtil.REFRESH_WORKING_SET_MAX_COUNT) {
             counter = 0;
             workingSet = generateWorkingRange();
         }

@@ -8,8 +8,6 @@ import project.util.DataUtil;
 import project.virtual.PageTable;
 import project.virtual.PageTableEntry;
 
-import javax.xml.crypto.Data;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -25,8 +23,8 @@ public class Main {
         Kernel kernel = new Kernel(physicalMemory, new RandomAlgorithm());
         MemoryRefreshChecker memoryRefreshChecker = new MemoryRefreshChecker(physicalMemory);
 
-        PageTable pageTable = new PageTable(100);
-        for (int i = 0; i < 100; i++) {
+        PageTable pageTable = new PageTable(DataUtil.PAGE_TABLE_SIZE);
+        for (int i = 0; i < DataUtil.PAGE_TABLE_SIZE; i++) {
             pageTable.addEntry(new PageTableEntry(), i);
         }
 
@@ -37,7 +35,7 @@ public class Main {
             memoryRefreshChecker.checkForRefresh();
         }
 
-        Logger.writeToFile(DataUtil.WORKING_SET_SIZE);
+        Logger.writeToFile();
     }
 
     private static void testNRUAlgorithm() {
@@ -47,8 +45,8 @@ public class Main {
         Kernel kernel = new Kernel(physicalMemory, new NRUAlgorithm());
         MemoryRefreshChecker memoryRefreshChecker = new MemoryRefreshChecker(physicalMemory);
 
-        PageTable pageTable = new PageTable(100);
-        for (int i = 0; i < 100; i++) {
+        PageTable pageTable = new PageTable(DataUtil.PAGE_TABLE_SIZE);
+        for (int i = 0; i < DataUtil.PAGE_TABLE_SIZE; i++) {
             pageTable.addEntry(new PageTableEntry(), i);
         }
 
@@ -59,6 +57,6 @@ public class Main {
             memoryRefreshChecker.checkForRefresh();
         }
 
-        Logger.writeToFile(DataUtil.WORKING_SET_SIZE);
+        Logger.writeToFile();
     }
 }
