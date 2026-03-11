@@ -34,7 +34,7 @@ public class Process {
             entry = pageTable.getEntry(random.nextInt(pageTable.size()));
         }
 
-        boolean isWrite = chance(0.2);
+        boolean isWrite = chance(DataUtil.WRITE_PROBABILITY);
 
         try {
             Logger.logAccess();

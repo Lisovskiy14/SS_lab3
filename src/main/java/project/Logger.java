@@ -26,8 +26,9 @@ public class Logger {
         pageFaultCount = 0;
     }
 
-    public static void writeToFile() {
+    public static void writeToFile(String title) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            writer.write(title + "\n");
             writer.write("Розмір RAM: " + DataUtil.RAM_SIZE + "\n");
             writer.write("Розмір робочого набору: " + DataUtil.WORKING_SET_SIZE + "\n");
             writer.write("Всього звернень до пам'яті: " + accessCount + "\n");

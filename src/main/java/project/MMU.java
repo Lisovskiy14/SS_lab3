@@ -8,7 +8,9 @@ public class MMU {
     public static void access(PageTableEntry entry, boolean isWrite) {
         if (entry.isPresence()) {
             entry.setReferenced(true);
-            entry.setModified(isWrite);
+            if (isWrite) {
+                entry.setModified(true);
+            }
         } else {
             throw new PageFaultException();
         }

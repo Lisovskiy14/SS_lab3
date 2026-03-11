@@ -35,7 +35,7 @@ public class Main {
             memoryRefreshChecker.checkForRefresh();
         }
 
-        Logger.writeToFile();
+        Logger.writeToFile("Random алгоритм");
     }
 
     private static void testNRUAlgorithm() {
@@ -57,6 +57,6 @@ public class Main {
             memoryRefreshChecker.checkForRefresh();
         }
 
-        Logger.writeToFile();
+        Logger.writeToFile("NRU алгоритм");
     }
 }
